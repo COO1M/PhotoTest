@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PhotoTest</string>
+
+    <string name="system_camera_shoot">系统摄像头拍摄</string>
+    <string name="builtin_camera_shoot">内置摄像头拍摄</string>
+    <string name="no_permit">没有授予必要权限</string>
+    <string name="go_permit">前往授予</string>
+    <string name="no_image">图片不存在</string>
+
+    <string name="manage_permit">授权管理</string>
+    <string name="permit_camera_label">相机</string>
+    <string name="permit_camera_info">拍摄照片和录制视频</string>
+    <string name="permit_external_label">读写手机储存</string>
+    <string name="permit_external_info">读写设备上的照片、视频、音频</string>
+    <string name="grant">授予</string>
+    <string name="permit_denied">已永久拒绝，请自行授予</string>
+
+    <string name="crop">裁剪</string>
+    <string name="extract_text">提取文字</string>
+    <string name="quality_enhance">画质增强</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+
+    <string name="back_last_page">返回上一页</string>
+    <string name="success">成功</string>
+    <string name="image">图片</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="shoot">拍摄</string>
+</resources>
