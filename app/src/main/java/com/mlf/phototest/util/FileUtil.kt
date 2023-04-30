@@ -17,8 +17,8 @@ import java.io.FileOutputStream
 
 object FileUtil {
 
-    val relativeSavePath = "Pictures/PhotoTest/"
-    val absoluteSavePath =
+    private const val relativeSavePath = "Pictures/PhotoTest/"
+    private val absoluteSavePath =
         "${Environment.getExternalStorageDirectory().absolutePath}/$relativeSavePath"
 
     fun createPhotoUri(): Uri {
@@ -130,13 +130,6 @@ object FileUtil {
             }
         }
         return null
-
-//        runCatching {
-//            App.ctx.contentResolver.openFileDescriptor(uri, "r")?.use {
-//                return BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
-//            }
-//        }
-//        return null
     }
 
     fun saveBitmap(bitmap: Bitmap) {
