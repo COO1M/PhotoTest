@@ -25,24 +25,19 @@ fun CameraScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     Container {
+        AndroidView(
+            factory = { ctx ->
+                PreviewView(ctx).also { cameraPreview ->
+                    cameraPreview.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
 
-        Box(
+                    vm.cameraController.bindToLifecycle(lifecycleOwner)
+                    cameraPreview.controller = vm.cameraController
+                }
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
-        ) {
-            AndroidView(
-                factory = { ctx ->
-                    PreviewView(ctx).also { cameraPreview ->
-                        cameraPreview.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
-
-                        vm.cameraController.bindToLifecycle(lifecycleOwner)
-                        cameraPreview.controller = vm.cameraController
-                    }
-                },
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+        )
 
         Box(
             modifier = Modifier

@@ -40,7 +40,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.4.6"
+        kotlinCompilerExtensionVersion "1.4.7"
     }
     packagingOptions {
         resources {
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha08"
     //Compose
-    def compose_version = "1.4.2"
+    def compose_version = "1.4.3"
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -82,7 +82,7 @@ dependencies {
     //Accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:0.30.1"
     //MLKit
-    implementation "com.google.mlkit:text-recognition-chinese:16.0.0-beta6"
+    implementation "com.google.mlkit:text-recognition-chinese:16.0.0"
     //Pytorch
     def torch_version = "1.13.1"
     implementation "org.pytorch:pytorch_android_lite:$torch_version"
