@@ -9,6 +9,7 @@ val GiantsOrange = Color(0xFFFF5722)
 val Apple = Color(0xFF67C23A)
 val Transparent = Color(0x00000000)
 val Black = Color(0xFF000000)
+val BrilliantAzure = Color(0xFF409EFF)
 
 val AppColor = lightColors(
     primary = Color(0xFF409EFF),
