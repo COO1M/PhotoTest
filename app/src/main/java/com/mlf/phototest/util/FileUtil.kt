@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.mlf.phototest.App
 import java.io.File
 import java.io.FileOutputStream
@@ -132,7 +133,7 @@ object FileUtil {
         return null
     }
 
-    fun saveBitmap(bitmap: Bitmap) {
+    fun saveBitmap(bitmap: Bitmap): Long {
         val context = App.act
         val fileName = "${System.currentTimeMillis()}.jpg"
         if (Build.VERSION.SDK_INT >= 30) {
@@ -148,6 +149,7 @@ object FileUtil {
                 resolver.openOutputStream(uri).use {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
                 }
+                return ContentUris.parseId(uri)
             }
         } else {
             val imagesDir = absoluteSavePath
@@ -157,7 +159,9 @@ object FileUtil {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
             }
             MediaScannerConnection.scanFile(context, arrayOf(image.absolutePath), null, null)
+            return ContentUris.parseId(image.toUri())
         }
+        return 0
     }
 
 }

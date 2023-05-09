@@ -37,11 +37,12 @@ fun RootNavigation() {
         composable(
             route = RootDestination.Check.routeWithArgs,
             arguments = RootDestination.Check.args
-        ) {
-            val backStackEntry = rootNavController.currentBackStackEntry
-            val photoId = backStackEntry?.arguments?.getLong(RootDestination.Check.argPhotoId) ?: 0
+        ) { backStackEntry ->
+            val photoId = backStackEntry.arguments?.getLong(RootDestination.Check.argPhotoId) ?: 0
+            val savePhotoId = backStackEntry.savedStateHandle.get<Long>("savePhotoId") ?: 0
             CheckScreen(
-                photoId = photoId,
+                navPhotoId = photoId,
+                savePhotoId = savePhotoId,
                 onNavigateBack = { rootNavController.popBackStack() },
                 onNavigateToCrop = { rootNavController.navigate("${RootDestination.Crop.route}/$it") },
                 onNavigateToOcr = { rootNavController.navigate("${RootDestination.Ocr.route}/$it") },
@@ -51,20 +52,22 @@ fun RootNavigation() {
         composable(
             route = RootDestination.Crop.routeWithArgs,
             arguments = RootDestination.Crop.args
-        ) {
-            val backStackEntry = rootNavController.currentBackStackEntry
-            val photoId = backStackEntry?.arguments?.getLong(RootDestination.Crop.argPhotoId) ?: 0
+        ) { backStackEntry ->
+            val photoId = backStackEntry.arguments?.getLong(RootDestination.Crop.argPhotoId) ?: 0
+            val previousBackStack = rootNavController.previousBackStackEntry
             CropScreen(
                 photoId = photoId,
-                onNavigateBack = { rootNavController.popBackStack() }
+                onNavigateBack = {
+                    if (it != null) previousBackStack?.savedStateHandle?.set("savePhotoId", it)
+                    rootNavController.popBackStack()
+                }
             )
         }
         composable(
             route = RootDestination.Ocr.routeWithArgs,
             arguments = RootDestination.Ocr.args
-        ) {
-            val backStackEntry = rootNavController.currentBackStackEntry
-            val photoId = backStackEntry?.arguments?.getLong(RootDestination.Ocr.argPhotoId) ?: 0
+        ) { backStackEntry ->
+            val photoId = backStackEntry.arguments?.getLong(RootDestination.Ocr.argPhotoId) ?: 0
             OcrScreen(
                 photoId = photoId,
                 onNavigateBack = { rootNavController.popBackStack() }
@@ -73,12 +76,15 @@ fun RootNavigation() {
         composable(
             route = RootDestination.Sr.routeWithArgs,
             arguments = RootDestination.Sr.args
-        ) {
-            val backStackEntry = rootNavController.currentBackStackEntry
-            val photoId = backStackEntry?.arguments?.getLong(RootDestination.Sr.argPhotoId) ?: 0
+        ) { backStackEntry ->
+            val photoId = backStackEntry.arguments?.getLong(RootDestination.Sr.argPhotoId) ?: 0
+            val previousBackStack = rootNavController.previousBackStackEntry
             SrScreen(
                 photoId = photoId,
-                onNavigateBack = { rootNavController.popBackStack() }
+                onNavigateBack = {
+                    if (it != null) previousBackStack?.savedStateHandle?.set("savePhotoId", it)
+                    rootNavController.popBackStack()
+                }
             )
         }
         composable(route = RootDestination.Camera.route) {

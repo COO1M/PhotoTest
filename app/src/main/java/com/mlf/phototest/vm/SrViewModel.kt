@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.sqrt
 
 class SrViewModel : ViewModel() {
@@ -38,8 +39,17 @@ class SrViewModel : ViewModel() {
         }
     }
 
-    fun save() {
-        _uiState.value.resultBmp?.let { FileUtil.saveBitmap(it) }
+    fun save(
+        onSuccess: (Long) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.value.resultBmp?.let {
+                val id = FileUtil.saveBitmap(it)
+                withContext(Dispatchers.Main) {
+                    onSuccess(id)
+                }
+            }
+        }
     }
 
 }

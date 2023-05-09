@@ -19,7 +19,7 @@ import com.mlf.phototest.vm.SrViewModel
 @Composable
 fun SrScreen(
     photoId: Long,
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: (savePhotoId: Long?) -> Unit = {}
 ) {
     val vm: SrViewModel = viewModel()
     val uiState by vm.uiState.collectAsStateWithLifecycle()
@@ -46,14 +46,13 @@ fun SrScreen(
                 RoundBtn(
                     iconId = R.drawable.baseline_close,
                     labelId = R.string.cancel,
-                    onClick = onNavigateBack
+                    onClick = { onNavigateBack(null) }
                 )
                 RoundBtn(
                     iconId = R.drawable.baseline_check,
                     labelId = R.string.confirm,
                     onClick = {
-                        vm.save()
-                        onNavigateBack()
+                        vm.save(onNavigateBack)
                     }
                 )
             }

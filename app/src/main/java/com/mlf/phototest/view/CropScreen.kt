@@ -1,8 +1,18 @@
 package com.mlf.phototest.view
 
 import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -25,7 +35,7 @@ import com.mlf.phototest.vm.CropViewModel
 import kotlin.math.abs
 
 @Composable
-fun CropScreen(photoId: Long, onNavigateBack: () -> Unit = {}) {
+fun CropScreen(photoId: Long, onNavigateBack: (savePhotoId: Long?) -> Unit = {}) {
     val vm: CropViewModel = viewModel()
     val uiState by vm.uiState.collectAsStateWithLifecycle()
 
@@ -154,7 +164,7 @@ fun CropScreen(photoId: Long, onNavigateBack: () -> Unit = {}) {
             RoundBtn(
                 iconId = R.drawable.baseline_close,
                 labelId = R.string.cancel,
-                onClick = onNavigateBack
+                onClick = { onNavigateBack(null) }
             )
             RoundBtn(
                 iconId = R.drawable.baseline_check,
@@ -166,9 +176,9 @@ fun CropScreen(photoId: Long, onNavigateBack: () -> Unit = {}) {
                         rectStartX,
                         rectStartY,
                         rectEndX - rectStartX,
-                        rectEndY - rectStartY
+                        rectEndY - rectStartY,
+                        onNavigateBack
                     )
-                    onNavigateBack()
                 }
             )
         }

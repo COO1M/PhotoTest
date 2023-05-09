@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CropViewModel : ViewModel() {
 
@@ -39,7 +40,8 @@ class CropViewModel : ViewModel() {
         rectX: Float,
         rectY: Float,
         rectWidth: Float,
-        rectHeight: Float
+        rectHeight: Float,
+        onSuccess: (Long) -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value.bitmap?.let { bmp ->
@@ -50,7 +52,10 @@ class CropViewModel : ViewModel() {
                     (rectWidth / imgWidth * bmp.width).toInt(),
                     (rectHeight / imgHeight * bmp.height).toInt()
                 )
-                FileUtil.saveBitmap(cropBmp)
+                val photoId = FileUtil.saveBitmap(cropBmp)
+                withContext(Dispatchers.Main) {
+                    onSuccess(photoId)
+                }
             }
         }
     }
@@ -60,5 +65,7 @@ data class CropUiState(
     val uri: Uri = Uri.EMPTY,
     val bitmap: Bitmap? = null,
     val bitmapWidth: Float = 0f,
-    val bitmapHeight: Float = 0f
+    val bitmapHeight: Float = 0f,
+    val success: Boolean = false,
+    val savePhotoId: Long = 0
 )
